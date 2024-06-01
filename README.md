@@ -5,7 +5,7 @@ While the "E" in W3E signifies "enhanced", the `e` used in `w3e-` class prefix d
 
 To ensure compatibility and prevent potential website or application breakage during W3E.css updates, it's recommended to include both the `w3e-` prefix and the `w3-` class prefix for each experimental element. For example, use `class="w3e-content w3-content"`.
 
-## Hosted CDN files
+## CDN Hosted Files
 You can attach the following to your web application:
 * https://cdn.jsdelivr.net/gh/emnawer/W3E/w3e.min.css
 * https://cdn.jsdelivr.net/gh/emnawer/W3E/w3e.min.js
