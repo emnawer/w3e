@@ -214,3 +214,7 @@ Imagine you have a progress bar with the HTML ID `loading` that currently displa
 </div>
 ```
 This code would call the `updateBar()` function, passing `loading` as the barID and 25 as the update value, increasing the progress bar's width to 36% (current 11% + update 25%).
+
+## Support
+
+For support and report issues: (https://github.com/emnawer/W3E/issues)
