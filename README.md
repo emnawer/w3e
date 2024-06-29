@@ -1,16 +1,16 @@
 # W3Enhanced
-W3E.css is an extension of the popular W3.css framework, offering additional functionalities and supplementary JavaScript (W3E.js) for a more complete features.
+W3E is an extension of the popular W3.CSS framework, offering additional functionalities and supplementary JavaScript `w3e.js` for a more complete features.
 
 While the "E" in W3E signifies "enhanced", the `e` used in `w3e-` class prefix denotes experimental features. These classes, like `w3e-content`, are for short-term use until officially adopted.
 
-To ensure compatibility and prevent potential website or application breakage during W3E.css updates, it's recommended to include both the `w3e-` prefix and the `w3-` class prefix for each experimental element. For example, use `class="w3e-content w3-content"`.
+To ensure compatibility and prevent potential website or application breakage during `w3e.css` updates, it's recommended to include both the `w3e-` prefix and the `w3-` class prefix for each experimental element. For example, use `class="w3e-content w3-content"`.
 
 ## CDN Hosted Files
 You can attach the following to your web application:
-* https://cdn.jsdelivr.net/gh/emnawer/W3E/w3e.min.css
-* https://cdn.jsdelivr.net/gh/emnawer/W3E/w3e.min.js
+* https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css
+* https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js
 
-## Using W3E.css Replaces Traditional W3.CSS
+## Using w3e.css Replaces Traditional w3.CSS
 
 Including w3e.css provides both the traditional W3.CSS framework and my enhancements. There's no need to include separate files for both.
 
