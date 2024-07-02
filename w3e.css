@@ -1670,7 +1670,7 @@ h6 {
   border-color: #e7ffff!important;
 }
 
-.w3e-accordion>[id$=-acc],.w3e-slider>img,.w3e-tabs>[id$=-tab] {
+.w3e-accordion [id$=-acc],.w3e-slider>img,.w3e-tabs [id$=-tab] {
   display: none;
 }
 
