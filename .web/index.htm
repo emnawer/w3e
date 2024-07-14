@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>W3E (W3.CSS Enhanced)</title>
+    <meta charset="utf-8">
+    <meta name="description" content="W3E is a powerful, free to use, and open-source front-end framework based on W3.CSS, for building responsive, mobile-first websites. Quickly build custom designs with CSS, JavaScript, and HTML.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWKK3P6H38"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-XWKK3P6H38');
+	</script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-pink.css">
+    <link rel="icon" href="favicon.ico">
+    <style type="text/css">
+    :root {
+        --bg-grayscale-white: rgba(0, 0, 0, 0);
+        --bg-grayscale-black: rgba(0, 0, 0, .4);
+    }
+
+        .w3e-shade,
+.w3e-shade-360 {
+    background-image: linear-gradient(0deg, var(--bg-grayscale-black), var(--bg-grayscale-white));
+}
+
+.w3e-header {
+    background-image: linear-gradient(315deg, rgba(156, 39, 176, .6),rgba(244, 67, 54, .4));
+}
+
+code.w3e-code,
+.w3e-code,
+.w3e-commandline {
+    padding: 1em 2em;
+    font-family: monospace;
+    border: 1px solid rgba(255, 255, 255, .4);
+    display: inline-block;
+    /*  padding: 8px 16px;*/
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: rgba(255, 255, 255, .6);
+    text-align: left;
+    background-color: rgba(0, 0, 0);
+}
+
+.w3e-commandline::before {
+    content: '$ ';
+    color: rgba(255, 255, 255, .6);
+    text-align: left;
+
+}
+
+code.w3e-code,
+.w3e-code {
+    /*  white-space: pre;*/
+    position: relative;
+    margin:16px;
+    /*  border-top-width: 1em;*/
+}
+.w3e-middle {
+    display: table-cell;
+    vertical-align: middle;
+    width: 0.01%;
+}
+.w3e-hero-max {
+    height: 100vh
+}
+.w3e-banner {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    border: 0;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    /*  text-align: center;*/
+    cursor: pointer;
+    /*  white-space: nowrap;*/
+    box-shadow: ;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.w3e-banner:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+}
+
+    </style>
+</head>
+
+<body class="w3e-shade-360">
+    <!-- Header -->
+    <div id="top" class="w3e-header w3-theme">
+        <div class="w3-bar">
+            <span class="w3-bar-item w3-padding-16 w3-hide-small">W3E</span>
+            <a href="https://codepen.io/emnawer" class="w3-bar-item w3-button w3-padding-16">React Demos</a>
+            <a href="https://github.com/emnawer/w3e" class="w3-bar-item w3-button w3-padding-16 w3-hide-medium w3-hide-large">GitHub</a>
+            <a href="https://www.npmjs.com/package/w3e" class="w3-bar-item w3-button w3-padding-16 w3-hide-medium w3-hide-large">NPM</a>
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-button w3-padding-16">
+                    Projects <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+                    <a href="https://github.com/emnawer/w3e" class="w3-bar-item w3-button">GitHub</a>
+                    <a href="https://www.npmjs.com/package/w3e" class="w3-bar-item w3-button">NPM</a>
+                    <a href="#" class="w3-bar-item w3-button">React Components <span class="w3-tag w3-orange">alpha</span></a>
+                </div>
+            </div>
+            <a class="w3-bar-item w3-button w3-padding-16 w3-right " href="https://buymeacoffee.com/emnawer" rel="nofollow" target="_blank">Buy me <span class="w3-xlarge"> &#9749; </a>
+        </div>
+        <div class="w3-center w3e-hero-max w3e-middle w3-padding-64"><span class="w3-tag w3-orange w3-text-theme">v1.0-RC2</span>
+            <h1 class="w3-jumbo">W3E</h1>
+            <h1 class="w3-animate-bottom">W3.CSS Enhanced </h1>
+            <h4 class="w3-animate-bottom">Built on top of W3.CSS with JavaScript!</h4>
+            <div class="w3-padding-64">
+                <div class="w3e-commandline w3-large w3-round w3-card-4 w3-margin">npm install w3e</div>
+                <a href="https://github.com/emnawer/w3e" class="w3-btn w3-round w3-xlarge w3-theme-dark w3-margin">Download</a>
+                <div class="w3-content w3-padding-32">
+                    <br>CDN hosted files: (<a href="#cdnHow" class="w3-small">Don't know how?</a>)
+                    <br>https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css
+                    <br>https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Section -->
+    <div class="w3-container w3-dark-gray w3-padding-64">
+        <div class="w3-content w3e-content w3-row-padding w3-padding-64 w3-center">
+            <h2 class="w3-padding-32"> Works Well with React.</h2>
+            <p>JavaScript components come with working code at <a href="https://codepen.io/emnawer">CodePen</a>, so you can learn, test and copy.</p>
+            <!-- CodePEN -->
+            <div class="w3-padding-32">
+                <p class="codepen" data-height="382" data-default-tab="js,result" data-slug-hash="VwOrEKo" data-pen-title="ReactJS Sidebar Component (S)" data-user="emnawer" style="height: 382px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+                    <span>See the Pen <a href="https://codepen.io/emnawer/pen/VwOrEKo">
+                            ReactJS Sidebar Component (S)</a> by emnawer (<a href="https://codepen.io/emnawer">@emnawer</a>)
+                        on <a href="https://codepen.io">CodePen</a>.</span>
+                </p>
+                <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+            </div>
+            <!-- /CodePEN -->
+            <p>Try more at <a href="https://codepen.io/emnawer">CodePen</a>.</p>
+        </div>
+    </div>
+    <!-- Section -->
+    <div class="w3-container w3-padding-64">
+        <div class=" w3-center w3-padding-64 w3e-content w3-content">
+            <h2 class="w3-padding-32">Not an Evolution,<br> but rather a robocop suit.</h2>
+            <p>W3E isn't a CSS rebuild of the W3.CSS framework, instead, it serves as an addition. While JavaScript is the primary enhancement, W3E also addresses bug fixes and introduce valuable new styles to the existing framework.</p>
+            <br>
+            <table class="w3-responsive w3-table w3-striped w3-bordered" style="white-space: nowrap;">
+                <thead>
+                    <tr class="">
+                        <th>
+                            <h3>Component</h3>
+                        </th>
+                        <th>
+                            <h3>W3.CSS v4.10</h3>
+                        </th>
+                        <th>
+                            <h3>W3E v1.0</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="w3-white">
+                    <tr>
+                        <td>Accordion</td>
+                        <td><span class="w3-tag w3-theme">w3e-accordion*</span></td>
+                        <td class="w3-text-theme">w3e.accordions()</td>
+                    </tr>
+                    <tr>
+                        <td>Tab</td>
+                        <td><span class="w3-tag w3-theme">w3e-tab*</span></td>
+                        <td class="w3-text-theme">w3e.tabs()</td>
+                    </tr>
+                    <tr>
+                        <td>Slide Show</td>
+                        <td><span class="w3-tag w3-theme">w3e-slider*</span></td>
+                        <td class="w3-text-theme">w3e.sliders()</td>
+                    </tr>
+                    <tr>
+                        <td>Sidebar</td>
+                        <td><span class="w3-tag w3-gray">w3-sidebar</span></td>
+                        <td class="w3-text-theme">w3e.sliders()</td>
+                    </tr>
+                    <tr>
+                        <td>Progress Bar</td>
+                        <td><span class="w3-tag w3-gray">N/A**</span></td>
+                        <td class="w3-text-theme">w3e.sliders()</td>
+                    </tr>
+                    <tr>
+                        <td>Modal</td>
+                        <td><span class="w3-tag w3-gray">w3-modal</span></td>
+                        <td class="w3-text-theme">w3e.sliders()</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <p class="w3-text-gray">*Was not available with old W3.CSS and added with W3E.</p>
+            <p class="w3-text-gray">**N/A: component does not require a css class.</p>
+            <br>
+        </div>
+    </div>
+    <!-- Section -->
+    <div class="w3-container w3-padding-64 w3-light-gray">
+        <div class=" w3-center w3-padding-64 w3e-content w3-content">
+            <h2 class="w3-padding-32">W3.CSS Speaks English.</h2>
+            <p>Easy to remember color classes, you don't need to recall the function name of a color class, it's always that color... the red text is <span class="w3-text-red">w3-text-red</span> and blue is <span class="w3-blue">w3-blue</span>.</p>
+            <br>
+            <div class="w3-row-padding">
+                <div class="w3-half w3-left-align">
+                    <h3>Fill Color</h3>
+                    <ul class="w3-ul w3-hoverable">
+                        <li class=""><span class="w3-tag w3-theme">w3-theme (primary)</span></li>
+                        <li class=""><span class="w3-tag w3-gray">w3-gray (secondary)</span></li>
+                        <li class=""><span class="w3-tag w3-green">w3-green (success)</span></li>
+                        <li class=""><span class="w3-tag w3-red">w3-red (danger)</span></li>
+                        <li class=""><span class="w3-tag w3-orange">w3-orange (warning)</span></li>
+                        <li class=""><span class="w3-tag w3-blue">w3-blue (info)</span></li>
+                    </ul>
+                </div>
+                <div class="w3-half w3-left-align">
+                    <h3>Text Color</h3>
+                    <ul class="w3-ul w3-hoverable">
+                        <li class="w3-text-theme">w3-text-theme (primary)</li>
+                        <li class="w3-text-gray">w3-text-gray (secondary)</li>
+                        <li class="w3-text-green">w3-text-green (success)</li>
+                        <li class="w3-text-red">w3-text-red (danger)</li>
+                        <li class="w3-text-orange">w3-text-orange (warning)</li>
+                        <li class="w3-text-blue">w3-text-blue (info)</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <p class="w3-text-gray">*In (brackets) the function naming of the color as used by other frameworks.</p><br>
+        </div>
+    </div>
+    <!-- Section -->
+    <div class="w3-container w3-dark-gray w3-padding-64">
+        <div class="w3e-content w3-content w3-center w3-padding-64">
+            <div class="">
+                <h2 class="w3-padding-32">The Most Logical Grid System,<br> with built-in responsiveness.</h2>
+                <p>Multiple blocks divide a row horizontally into halves, thirds, or quarters.<br>
+                    On smaller screens, the blocks automatically stack for optimal viewing.</p>
+            </div>
+            <br><br>
+            <h4> w3-row</h4>
+            <div class="w3-row w3-light-gray w3-card w3-round w3-center" style="padding: 8px 0;">
+                <div class="w3-half w3-container w3-theme-dark w3-opacity-min">
+                    <h5>w3-half</h5>
+                </div>
+                <div class="w3-half w3-container">
+                    <h5>w3-half</h5>
+                </div>
+            </div>
+            <br><br><br>
+            <h4> w3-row</h4>
+            <div class="w3-row w3-light-gray w3-card w3-round w3-center" style="padding: 8px 0;">
+                <div class="w3-third w3-container w3-theme-dark w3-opacity-min">
+                    <h5>w3-third</h5>
+                </div>
+                <div class="w3-third w3-container" style="border-width: 0 2px 0 0; border-style: solid;border-color: #ccc;">
+                    <h5>w3-third</h5>
+                </div>
+                <div class="w3-third w3-container">
+                    <h5>w3-third</h5>
+                </div>
+            </div>
+            <h4> w3-row</h4>
+            <div class="w3-row w3-light-gray w3-card w3-round w3-center" style="padding: 8px 0;">
+                <div class="w3-third w3-container w3-theme-dark w3-opacity-min">
+                    <h5>w3-third</h5>
+                </div>
+                <div class="w3-twothird w3-container">
+                    <h5 class="w3-text-theme">w3-twothird</h5>
+                </div>
+            </div>
+            <span class="w3-small">*Merge two columns with w3-twothird.</span>
+            <br><br><br>
+            <h4> w3-row</h4>
+            <div class="w3-row w3-light-gray w3-card w3-round w3-center" style="padding: 8px 0;">
+                <div class="w3-quarter w3-theme-dark w3-opacity-min">
+                    <h5>w3-quarter</h5>
+                </div>
+                <div class="w3-quarter ">
+                    <h5>w3-quarter</h5>
+                </div>
+                <div class="w3-quarter " style="border-width: 0 2px; border-style: solid;border-color: #ccc;">
+                    <h5>w3-quarter</h5>
+                </div>
+                <div class="w3-quarter ">
+                    <h5>w3-quarter</h5>
+                </div>
+            </div>
+            <h4> w3-row</h4>
+            <div class="w3-row w3-light-gray w3-card w3-round w3-center" style="padding: 8px 0;">
+                <div class="w3-quarter w3-theme-dark w3-opacity-min">
+                    <h5>w3-quarter</h5>
+                </div>
+                <div class="w3-threequarter">
+                    <h5 class="w3-text-theme">w3-threequarter</h5>
+                </div>
+            </div>
+            <span class="w3-small">*Merge three columns with w3-threequarter.</span><br>
+            <br><br>
+        </div>
+    </div>
+    <!-- Section -->
+    <div class="w3-container w3-light-gray w3-card">
+        <div class="w3e-content w3-content w3-center w3-padding-64" style="max-width: 980px;">
+            <p class="w3-xxxlarge">Hop on.</p>
+            <p>There are many ways to help improve W3E, here are few:</p>
+            <p><a class="w3-btn w3-theme w3-opacity-min w3-round w3-margin" href="https://github.com/emnawer/w3e/discussions" rel="nofollow" target="_blank">Join Discussion</a> <a class="w3-btn w3-theme w3-opacity-min w3-round w3-margin" href="https://github.com/emnawer/w3e/subscription" rel="nofollow" target="_blank">Subscribe to W3E</a></p>
+            <p class="w3-margin" style="min-height:40px"><span class="sharethis-inline-share-buttons"></span></p>
+            <div class="w3-padding-16"></div>
+        </div>
+    </div>
+    <!-- Section -->
+    <div id="cdnHow" class="w3-content w3e-content w3-padding-64 ">
+        <h3>How to Include CDN Hosted Files?</h3>
+        <p>You can include the following CDN files to your website page by adding them to the &lt;head&gt; section of your HTML document.<br>
+            The HTML document header should look similar to this:</p>
+        <code class="w3e-code w3-round w3-card-4">
+            &lt;head&gt;<br>
+            &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css&quot;&gt;<br>
+            &lt;script src=&quot;https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js&quot;&gt;&lt;/script&gt;<br>
+            &lt;/head&gt;
+        </code>
+        <h4>Good practice:</h4>
+        <p>
+            The best way you include these files with the least issues, place the CSS &lt;link&gt; tag before the JavaScript &lt;script&gt; tag in the &lt;head&gt; section.
+        </p>
+    </div>
+    <!-- Footer -->
+    <div class="w3e-footer w3-container w3-dark-gray w3-padding-32">
+        <div class="w3-row w3-content w3-padding-32">
+            <div class="w3-half">
+                <h2>W3.CSS Links</h2>
+                <div class="">
+                    <p>As W3E is heavily based on W3.CSS styles, you will find following links quite useful.</p>
+                    <ul class="w3-ul">
+                        <li><a class="w3-button w3-theme w3-opacity-min w3-round" href="https://www.w3schools.com/w3css/w3css_color_themes.asp">Themes</a>
+                            List of W3.CSS main color themes.
+                        </li>
+                        <li><a class="w3-button w3-theme w3-opacity-min w3-round" href="https://www.w3schools.com/w3css/w3css_color_generator.asp">Generator</a>
+                            Generate your own theme.
+                        </li>
+                        <li><a class="w3-button w3-theme w3-opacity-min w3-round" href="https://www.w3schools.com/w3css/w3css_examples.asp">Examples</a>
+                            Learn from a real world demos.
+                        </li>
+                    </ul>
+                    <div class=""></div>
+                </div>
+            </div>
+            <div class="w3-half">
+                <h2 class="title">Follow Me</h2>
+                <p>Visit these profiles today, and follow me.</p>
+                <div class="w3-row-padding w3-magin-top">
+                    <div class="w3-half">
+                        <a href="https://github.com/emnawer" class="w3e-banner w3-gray"><img width="100%" alt="GitHub Logotype" src="https://github.githubassets.com/assets/GitHub-Logo-ee398b662d42.png">
+                            <div class="">Main projects repository</div>
+                        </a>
+                        <div style="padding:8px"></div>
+                        <a href="https://www.npmjs.com/~emnawer" class="w3e-banner w3-gray"><svg viewBox="0 0 780 250" aria-hidden="true" width="100%">
+                                <path fill="#231F20" d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"></path>
+                            </svg>
+                            <div class="">NPM packages</div>
+                        </a>
+                        <div style="padding:8px"></div>
+                    </div>
+                    <div class="w3-half">
+                        <a href="https://codepen.io/emnawer" class="w3e-banner w3-gray"><svg viewBox="0 0 138 26" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="100%">
+                                <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
+                            </svg>
+                            <div class="">Demos collection of W3.CSS, W3 Enhanced and React components</div>
+                        </a>
+                        <div style="padding:8px"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="w3-tooltip w3-right" style="position:relative;bottom:55px;">
+            <span class="w3-text w3-theme-light w3-padding">Go To Top</span>&nbsp;
+            <a class="w3-text-white" href="#top"><span class="w3-xlarge">&#9206;</span></a>
+        </div>
+        <div class="w3-content w3-padding w3-center w3-small">Copyright © 2024 <a class="w3-text-white" href="https://github.com/emnawer">Emnawer</a>. All rights reserved. | Built with W3E | Hosted by GitHub<br>
+            <a class="w3-text-white" href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Policy</a></div>
+    </div>
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=668cd5dfbc01d900197fffd3&product=inline-share-buttons&source=platform" async="async"></script>
+    <script src="w3e.js"></script>
+</body>
+
+</html>

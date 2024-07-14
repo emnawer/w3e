@@ -1,5 +1,5 @@
-# W3Enhanced
-W3E is an extension of the popular W3.CSS framework, offering additional functionalities and supplementary JavaScript `w3e.js` for a more complete features.
+# [W3E (W3.CSS Enhanced)](https://w3e.uk)
+W3E is an extension of the W3.CSS framework, offering additional functionalities and supplementary JavaScript `w3e.js` for a more complete features.
 
 While the "E" in W3E signifies "enhanced", the `e` used in `w3e-` class prefix denotes experimental features. These classes, like `w3e-content`, are for short-term use until officially adopted.
 
@@ -10,9 +10,9 @@ You can attach the following to your web application:
 * https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css
 * https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js
 
-## Using w3e.css Replaces Traditional w3.CSS
+## Using W3E Replaces Traditional W3.CSS
 
-Including w3e.css provides both the traditional W3.CSS framework and my enhancements. There's no need to include separate files for both.
+Including `w3e.css` provides both the traditional W3.CSS framework and W3E enhancements. There's no need to include separate files for both.
 
 If you require the original W3.CSS framework or its documentation, please refer to the following resource: https://www.w3schools.com/w3css/
 
@@ -25,7 +25,10 @@ If you require the original W3.CSS framework or its documentation, please refer 
 2. Modify content class `w3e-content` to limit maximum width to 1100px and right/left padding of 10px.
 3. Adding *new* CSS class for handheld themed borders. (`w3e-handheld`)
 4. Adding *new* CSS class for the clickable tab JavaScript function. (`w3e-tab`)
-5. Remove `.w3-sidebar.w3-collapse{display:block!important}` from large screen media.
+5. Remove (bug) `.w3-sidebar.w3-collapse{display:block!important}` from large screen media.
+
+**For alpha CSS enhancements [click here](https://github.com/emnawer/w3e/wiki).**
+
 
 ## JavaScript Enhancements:
 
@@ -38,6 +41,13 @@ The implemented JavaScript code adapts modern event handling practices as possib
 3. Images slider.
 4. Sidebar.
 5. Progress bar.
+
+**For alpha JavaScript enhancements [click here](https://github.com/emnawer/w3e/wiki).**
+
+
+### Live Examples
+
+**For JavaScript demos visit: https://codepen.io/emnawer**
 
 
 ### 1. Accordion
@@ -85,7 +95,7 @@ If a title has an ID of `Demo`, the corresponding section's ID would be `Demo-ac
 ### 2. Clickable tabs
 
 A tabbed interface allows users to efficiently navigate between different sections or content pages by clicking on designated tab buttons. This section demonstrates how to implement a tabbed interface using CSS classes provided by W3E.css.
- 
+
 - Required CSS: `w3e-tabs`  (beside button and tab IDs).
 - JavaScript methods: automatically assigned.
 
@@ -103,19 +113,19 @@ A tabbed interface allows users to efficiently navigate between different sectio
 
 **Example:**
 
-If a button has an ID of `Manama` the corresponding tab's ID would be `Manama-tab`. Clicking the `Manama` button would display the `Manama-tab` content and visually distinguish the `Manama` button as active.
+If a button has an ID of `London` the corresponding tab's ID would be `London-tab`. Clicking the `London` button would display the `London-tab` content and visually distinguish the `London` button as active.
 
 ```
 <div class="w3e-tabs">
 
   <div>
-    <button id="Manama">London</button>
+    <button id="London">London</button>
     <button id="DC">Paris</button>
     <button id="Tokyo">Tokyo</button>
   </div>
-  
-  <div id="Manama-tab">
-    <p>Manama is the capital city of Bahrain.</p>
+
+  <div id="London-tab">
+    <p>London is the capital city of the UK.</p>
   </div>
   <div id="DC-tab">
     <p>DC is the capital of USA.</p> 
@@ -123,13 +133,13 @@ If a button has an ID of `Manama` the corresponding tab's ID would be `Manama-ta
   <div id="Tokyo-tab">
     <p>Tokyo is the capital of Japan.</p>
   </div>
-  
+
 </div>
 ```
 
 ### 3. Slide Show
 
-The code employs a DOM traversal technique to efficiently locate the corresponding `w3-slider` container element and subsequently enumerate all IMG elements nested within the container; and binding a click event on button elements with the class `w3-button`. This streamlined process offers a degree of optimization for scenarios involving any number of images.
+The code employs a DOM traversal technique to efficiently locate the corresponding `w3e-slider` container element and subsequently enumerate all IMG elements nested within the container; and binding a click event on button elements with the class `w3-button`. This streamlined process offers a degree of optimization for scenarios involving any number of images.
 
 - Required CSS: `w3e-slider, <img>, w3-button`
 - JavaScript methods: automatically assigned.
@@ -137,16 +147,16 @@ The code employs a DOM traversal technique to efficiently locate the correspondi
 **Example:**
 
 ```
-<div class="w3-slider">
+<div class="w3e-slider">
 
   <img src="image1.jpg" style="width: 100%;">
   <img src="image2.jpg" style="width: 100%;">
   <img src="image3.jpg" style="width: 100%;">
   <img src="image4.jpg" style="width: 100%;">
-  
+
   <a class="w3-button" style="position:absolute;top:45%;left:0;" >❮</a>
   <a class="w3-button" style="position:absolute;top:45%;right:0;" >❯</a>
-  
+
 </div>
 ```
 
@@ -215,6 +225,8 @@ Imagine you have a progress bar with the HTML ID `loading` that currently displa
 ```
 This code would call the `updateBar()` function, passing `loading` as the barID and 25 as the update value, increasing the progress bar's width to 36% (current 11% + update 25%).
 
-## Support
+## Support, Feedback & Issues
 
-For support and report issues: (https://github.com/emnawer/W3E/issues)
+- For [support & Feedback](https://github.com/emnawer/w3e/discussions).
+- To report [issues](https://github.com/emnawer/w3e/issues).
+- [[Buy Me Coffee](https://buymeacoffee.com/emnawer)].
