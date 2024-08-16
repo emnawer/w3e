@@ -1,5 +1,5 @@
-# [W3E (W3.CSS Enhanced)](https://w3e.uk)
-W3E is an extension of the W3.CSS framework, offering additional functionalities and supplementary JavaScript `w3e.js` for a more complete features.
+# [W3E](https://w3e.uk)
+W3E is an extension of the W3.CSS framework, offering additional functionalities and supplementary JavaScript `w3e.js` for more complete features.
 
 While the "E" in W3E signifies "enhanced", the `e` used in `w3e-` class prefix denotes experimental features. These classes, like `w3e-content`, are for short-term use until officially adopted.
 
@@ -16,18 +16,20 @@ Including `w3e.css` provides both the traditional W3.CSS framework and W3E enhan
 
 If you require the original W3.CSS framework or its documentation, please refer to the following resource: https://www.w3schools.com/w3css/
 
+## W3.CSS Version:
+Note that current W3E is based on W3.CSS v4.10.
 
 ## CSS Enhancements:
 
 **Current CSS Enhancements:**
 
-1. Body/HTML font size increased from 15px to 16px for better support on modern screens.
-2. Modify content class `w3e-content` to limit maximum width to 1100px and right/left padding of 10px.
-3. Adding *new* CSS class for handheld themed borders. (`w3e-handheld`)
-4. Adding *new* CSS class for the clickable tab JavaScript function. (`w3e-tab`)
-5. Remove (bug) `.w3-sidebar.w3-collapse{display:block!important}` from large screen media.
+1. Body/HTML font size increased from 15px to 16px for better support on modern screens. *Added to W3.CSS v4.10.1.* (https://github.com/emnawer/w3css)
+2. Modify content class `w3-content` to limit maximum width to 1100px and right/left padding of 10px. *Added to W3.CSS v4.10.1.* (https://github.com/emnawer/w3css)
+3. Adding *new* CSS class for handheld themed borders, `w3e-handheld`. Experimental maybe replaced with other 
+4. Adding *new* CSS class for the clickable tab JavaScript function. `w3e-tab`
+5. Remove (bug) `.w3-sidebar.w3-collapse{display:block!important}` from large screen media. *Removed with W3.CSS v4.10.1.* (https://github.com/emnawer/w3css)
 
-**For alpha CSS enhancements [click here](https://github.com/emnawer/w3e/wiki).**
+**For alpha CSS enhancements, [click here](https://github.com/emnawer/w3e/wiki).**
 
 
 ## JavaScript Enhancements:
@@ -41,13 +43,18 @@ The implemented JavaScript code adapts modern event handling practices as possib
 3. Images slider.
 4. Sidebar.
 5. Progress bar.
+6. Modals.
+7. Dropdowns.
+8. Panels.
+9. Show and hide elements.
 
-**For alpha JavaScript enhancements [click here](https://github.com/emnawer/w3e/wiki).**
+**For alpha JavaScript enhancements, [click here](https://github.com/emnawer/w3e/wiki).**
 
 
 ### Live Examples
 
-**For JavaScript demos visit: https://codepen.io/emnawer**
+**For HTML/JavaScript and ReactJS demos, visit: https://codepen.io/emnawer**
+
 
 
 ### 1. Accordion
@@ -144,7 +151,20 @@ The code employs a DOM traversal technique to efficiently locate the correspondi
 - Required CSS: `w3e-slider, <img>, w3-button`
 - JavaScript methods: automatically assigned.
 
+**Structure:**
+
+- The main container of a slider is almost any element including `<div>` with the class name `w3e-slider`.
+- The `<img>` tags represent the images that will be displayed in the slider. 
+- Each slider interface consists of navigation buttons to iterate through images.
+
+**JavaScript Behavior:**
+
+- A JavaScript function automatically scans the entire HTML document for elements with the `w3e-slider` class.
+- The function will add click events to `w3-slider` child `w3-button` for navigation.
+
 **Example:**
+This snippet creates a basic image slider where you can cycle through images using the left and right navigation buttons.
+
 
 ```
 <div class="w3e-slider">
@@ -204,14 +224,19 @@ This JavaScript function, named `updateBar`, dynamically updates the width of a 
 - Added JavaScript method: `updateBar(barID, update)`.
 
 **Function Parameters:**
+
 - `barID` (string): The unique element ID of the progress bar you want to update. This element is assumed to be an HTML element with a style attribute containing a width property.
 - `update` (number): The amount by which you want to adjust the progress bar's width. This value is typically a positive integer to represent progress increase, but it can be negative to decrease the width.
+
 **Function Logic:**
+
 - Retrieves Current Width: The function retrieves the current width of the progress bar element.
 - Calculates New Width: It adds the desired update value to the current width, determining the new width for the progress bar.
 - Updates Element Width: Finally, the function updates the width property of the progress bar element using the calculated new width.
+
 **Example:**
-Imagine you have a progress bar with the HTML ID `loading` that currently displays 25% completion. You can trigger the update using an onclick event handler like this:
+Imagine you have a progress bar with the HTML ID `loading` that currently displays 25% completion. You can trigger the update using an `onclick` event handler.
+
 
 ```
 <div class="w3-container">
@@ -220,10 +245,136 @@ Imagine you have a progress bar with the HTML ID `loading` that currently displa
   <div id="loading" style="width:11%">0</div>
 </div><br>
 
-<button onclick='updateBar("loading", 25)'>Update Bar</button> 
+<button onclick='w3e.updateBar("loading", 25)'>Update Bar</button> 
 </div>
 ```
 This code would call the `updateBar()` function, passing `loading` as the barID and 25 as the update value, increasing the progress bar's width to 36% (current 11% + update 25%).
+
+### 6. Modal
+
+- Added CSS: `w3e-open, w3e-close`.
+- Added JavaScript methods: automatically assigned.
+
+**Structure:**
+
+- The main container of a Modal is an element with the class name `w3-modal`.
+- Each Modal features two clickable buttons: a close button located within the Modal itself `w3e-close`, and an open button positioned outside the Modal `w3e-open`.
+
+**Function Logic:**
+
+- The attribute `id` assigns a unique identifier to the modal, allowing it to be referenced later in the function `modals()` code for showing and closing the modal. The `w3-modal` attribute provides styling and layout utilities.
+- `w3-modal-content` applies styling for w3-modal content area.
+- This `w3e-close` class defined to provide specific styling and behavior for the close button. `w3-button` and `w3-display-topright` are optional styling classes.
+- The `w3e-open` class used for `onclick` JavaScript event handlers to open the modal dialog when the button is clicked. However, the modal can be opened by using a JavaScript programmable method for other event handlers. The ID attribute assigns a unique identifier to the button to know open, modal with `id-modal` ID.
+
+**Example:**
+This code snippet defines a basic modal dialog structure with a close button and an "Open Modal" button. The modal's styling and functionality are handled by JavaScript code that interacts with these elements.
+
+
+```
+  <div id="id-modal" class="w3-modal">
+      <div class="w3-modal-content">
+        <span class="w3-button w3-display-topright w3e-close">×</span>
+        <div>
+          Content goes here.
+        </div>
+        
+      </div>
+  </div>
+
+<button id="id" class="w3e-open" >Open Modal</button>
+```
+
+### 7. Dropdown
+
+Now the `w3-dropdown-click` has both behaviors of `w3-dropdown-click` and `w3-dropdown-hover`, `w3-dropdown-hover` may be deprecated in the future.
+
+- Added CSS: no new classes.
+- Added JavaScript methods: automatically assigned.
+
+**Structure:**
+
+- The `w3-dropdown-click` is the main container for the dropdown.
+- The `w3-button` is the button that, when clicked, will reveal the dropdown menu. The w3-button class styling the button to look like a typical button element. The hover and click events are assigned to this element.
+- The `w3-dropdown-content` class is the hidden content of the dropdown menu. The w3-dropdown-content class controls the appearance and positioning of the dropdown content. The optional `w3-bar-block` class makes the content displayed in a vertical list.
+- `w3-bar-item w3-button` are the individual links within the dropdown menu. The `w3-bar-item` and `w3-button` classes ensure they are visually styled as list items within the dropdown menu.
+
+**Function Logic:**
+
+Clicking the Button: When the button is clicked, the JavaScript code in the HTML file `dropdowns()` function will toggle the display of the `w3-dropdown-content` element. This is achieved by adding or removing the `w3-show` class from the `w3-dropdown-content` element, which is defined in the CSS framework.
+Hovering Over the Button: The code also to use `mouseover` and `mouseout` events to toggle the display of the dropdown content. The JavaScript function adds and removes the `w3-show` class to the `w3-dropdown-content` element when the mouse enters and exits the button area.
+
+**Example:**
+
+This code snippet is using a W3.CSS framework to provide the styling and W3E for JavaScript functionality.
+
+```
+<div class="w3-dropdown-click">
+      <button class="w3-button">Dropdown</button>
+      <div class="w3-dropdown-content w3-bar-block">
+        <a href="#" class="w3-bar-item w3-button">Link</a>
+        <a href="#" class="w3-bar-item w3-button">Link</a>
+        <a href="#" class="w3-bar-item w3-button">Link</a>
+      </div>
+</div>
+```
+
+### 8. Panel
+
+Panels are used to display information like for example notification message.
+
+- Added CSS: `w3e-close`.
+- Added JavaScript methods: automatically assigned.
+
+**Structure:**
+
+- The main container of a panel is any element with the class name `w3-panel`.
+- Each panel features two clickable buttons: a close button located within the panel itself `w3e-close`, and show the panel programmable using `w3e.show()` function.
+
+**Function Logic:**
+
+This component is a simple HTML structure for a panel that can be shown or hidden using JavaScript. Let's break it down:
+- `w3e.show('panel')` can be used in any programmable way to show the panel is an event handler that triggers a JavaScript function w3e.show('panel') when the button is clicked. This function is responsible for making the panel visible. Example: `<button class="w3-btn" onclick="w3e.show('panel')">Show panel</button>`
+- The parent element must have ID and the class "w3-panel". The "w3-display-container" is optional to help in positioning and layout of the child element. Example: `<div id="panel" class="w3-panel w3-display-container">`
+- A child element with the class "w3-button" and optional "w3-display-topright" can be added to preform the **close panel** function.
+ "w3-display-topright" positions the element in the top-right corner of its parent panel element. Example: `<span class="w3-button w3-display-topright">X</span>`
+
+
+**Example:**
+
+This code snippet represents a panel that can be shown or hidden through the button's interaction. The JavaScript function w3e.show('panel') is responsible for this functionality.
+
+
+```
+<button class="w3-btn" onclick="w3e.show('panel')">Show panel</button>
+  <div id="panel" class="w3-panel w3-display-container">
+      <span class="w3-button w3-display-topright">X</span>
+      <h3>Hello world!</h3>
+  </div>
+```
+
+### 9. Show and Hide HTML Elements
+
+Functions to show and hide any HTML element, like notification message.
+
+- Added CSS: no specific CSS class for progress bar. However, either an element ID, or pass the element's object itself, is required.
+- Added JavaScript method: `show(ID || object)` and `hide(ID || object)`.
+
+**Function Logic:**
+- The `show()` and `hide()` functions can be added to `onclick` attribute is what makes this interactive. When clicked, it executes the JavaScript code `w3e.show(ID)`.
+Using the `onclick` event to call `w3e.hide()` and `w3e.show()` functions passes the ID of the panel as an argument, making the panel visible or invisible. Example: `<button onclick="w3e.show(ID)>Show Panel</button>`
+- Similar to the "Show Panel" button, this button has the text "Hide Panel" and calls the JavaScript code `w3e.hide(ID)` when clicked. This code would likely call another function `w3e.hide()` to hide the panel. Example: `<button onclick="w3e.hide(ID)">Hide Panel</button>`
+
+**Example:**
+This code snippet creates a simple HTML panel with the ability to be shown or hidden using JavaScript buttons.
+
+```
+<div id="infoMessage" class="w3-panel">
+  <h3>Hello world!</h3>
+</div>
+<button onclick="w3e.show('infoMessage')">Show Panel</button>
+<button onclick="w3e.hide('infoMessage')">Hide Panel</button>
+```
 
 ## Support, Feedback & Issues
 

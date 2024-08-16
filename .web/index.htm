@@ -110,9 +110,9 @@ code.w3e-code,
             <a href="https://codepen.io/emnawer" class="w3-bar-item w3-button w3-padding-16">React Demos</a>
             <a href="https://github.com/emnawer/w3e" class="w3-bar-item w3-button w3-padding-16 w3-hide-medium w3-hide-large">GitHub</a>
             <a href="https://www.npmjs.com/package/w3e" class="w3-bar-item w3-button w3-padding-16 w3-hide-medium w3-hide-large">NPM</a>
-            <div class="w3-dropdown-hover w3-hide-small">
+            <div class="w3-dropdown-click w3-hide-small">
                 <button class="w3-button w3-padding-16">
-                    Projects <i class="fa fa-caret-down"></i>
+                    Projects <i class="w3-icon-carat-d"></i>
                 </button>
                 <div class="w3-dropdown-content w3-card-4 w3-bar-block">
                     <a href="https://github.com/emnawer/w3e" class="w3-bar-item w3-button">GitHub</a>
@@ -122,10 +122,10 @@ code.w3e-code,
             </div>
             <a class="w3-bar-item w3-button w3-padding-16 w3-right " href="https://buymeacoffee.com/emnawer" rel="nofollow" target="_blank">Buy me <span class="w3-xlarge"> &#9749; </a>
         </div>
-        <div class="w3-center w3e-hero-max w3e-middle w3-padding-64"><span class="w3-tag w3-orange w3-text-theme">v1.0-RC2</span>
-            <h1 class="w3-jumbo">W3E</h1>
-            <h1 class="w3-animate-bottom">W3.CSS Enhanced </h1>
-            <h4 class="w3-animate-bottom">Built on top of W3.CSS with JavaScript!</h4>
+        <div class="w3-center w3e-hero-max w3e-middle w3-padding-64"><span class="w3-tag w3-orange w3-text-white">v1.0-RC3*</span>
+            <h1 class="w3-jumbo w3-animate-bottom">W3E</h1>
+            <h2 class="w3-animate-bottom w3-xxlarge">W3.CSS Enhanced </h2>
+            <p class="w3-animate-bottom">Built on top of W3.CSS with JavaScript!</p>
             <div class="w3-padding-64">
                 <div class="w3e-commandline w3-large w3-round w3-card-4 w3-margin">npm install w3e</div>
                 <a href="https://github.com/emnawer/w3e" class="w3-btn w3-round w3-xlarge w3-theme-dark w3-margin">Download</a>
@@ -135,12 +135,13 @@ code.w3e-code,
                     <br>https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js
                 </div>
             </div>
+            <span class="w3-small">(*) Release Candidate 3, a community feedback pre-production release.</span>
         </div>
     </div>
     <!-- Section -->
     <div class="w3-container w3-dark-gray w3-padding-64">
         <div class="w3-content w3e-content w3-row-padding w3-padding-64 w3-center">
-            <h2 class="w3-padding-32"> Works Well with React.</h2>
+            <h2 class="w3-padding-32 w3-xxlarge"> Works Well with React.</h2>
             <p>JavaScript components come with working code at <a href="https://codepen.io/emnawer">CodePen</a>, so you can learn, test and copy.</p>
             <!-- CodePEN -->
             <div class="w3-padding-32">
@@ -158,7 +159,7 @@ code.w3e-code,
     <!-- Section -->
     <div class="w3-container w3-padding-64">
         <div class=" w3-center w3-padding-64 w3e-content w3-content">
-            <h2 class="w3-padding-32">Not an Evolution,<br> but rather a robocop suit.</h2>
+            <h2 class="w3-padding-32 w3-xxlarge">Not an Evolution,<br> but rather a robocop suit.</h2>
             <p>W3E isn't a CSS rebuild of the W3.CSS framework, instead, it serves as an addition. While JavaScript is the primary enhancement, W3E also addresses bug fixes and introduce valuable new styles to the existing framework.</p>
             <br>
             <table class="w3-table w3-striped w3-bordered" style="white-space: nowrap;">
@@ -198,7 +199,7 @@ code.w3e-code,
                     </tr>
                     <tr>
                         <td>Progress Bar</td>
-                        <td><span class="w3-tag w3-gray">N/A**</span></td>
+                        <td><span class="">N/A**</span></td>
                         <td class="w3-text-theme">w3e.updateBar()</td>
                     </tr>
                     <tr>
@@ -206,10 +207,25 @@ code.w3e-code,
                         <td><span class="w3-tag w3-gray">w3-modal</span></td>
                         <td class="w3-text-theme">w3e.modals()</td>
                     </tr>
-                     <tr>
-                        <td>Dropdown Menu</td>
+                    <tr>
+                        <td>Dropdown</td>
                         <td><span class="w3-tag w3-gray">w3-dropdown-click</span></td>
                         <td class="w3-text-theme">w3e.dropdowns()</td>
+                    </tr>
+                    <tr>
+                        <td>Panel</td>
+                        <td><span class="w3-tag w3-gray">w3-panel</span></td>
+                        <td class="w3-text-theme">w3e.panels()</td>
+                    </tr>
+                    <tr>
+                        <td>Show HTML Element</td>
+                        <td><span class="w3-tag w3-gray">w3-show</span></td>
+                        <td class="w3-text-theme">w3e.show()</td>
+                    </tr>
+                    <tr>
+                        <td>Hide HTML Element</td>
+                        <td><span class="w3-tag w3-gray">w3-hide</span></td>
+                        <td class="w3-text-theme">w3e.hide()</td>
                     </tr>
                 </tbody>
             </table>
@@ -222,7 +238,7 @@ code.w3e-code,
     <!-- Section -->
     <div class="w3-container w3-padding-64 w3-light-gray">
         <div class=" w3-center w3-padding-64 w3e-content w3-content">
-            <h2 class="w3-padding-32">W3.CSS Speaks English.</h2>
+            <h2 class="w3-padding-32 w3-xxlarge">W3.CSS Speaks English.</h2>
             <p>Easy to remember color classes, you don't need to recall the function name of a color class, it's always that color... the red text is <span class="w3-text-red">w3-text-red</span> and blue is <span class="w3-blue">w3-blue</span>.</p>
             <br>
             <div class="w3-row-padding">
@@ -257,7 +273,7 @@ code.w3e-code,
     <div class="w3-container w3-dark-gray w3-padding-64">
         <div class="w3e-content w3-content w3-center w3-padding-64">
             <div class="">
-                <h2 class="w3-padding-32">The Most Logical Grid System,<br> with built-in responsiveness.</h2>
+                <h2 class="w3-padding-32 w3-xxlarge">The Most Logical Grid System,<br> with built-in responsiveness.</h2>
                 <p>Multiple blocks divide a row horizontally into halves, thirds, or quarters.<br>
                     On smaller screens, the blocks automatically stack for optimal viewing.</p>
             </div>
@@ -327,7 +343,7 @@ code.w3e-code,
     <div class="w3-container w3-light-gray w3-card">
         <div class="w3e-content w3-content w3-center w3-padding-64" style="max-width: 980px;">
             <p class="w3-xxxlarge">Hop on.</p>
-            <p>There are many ways to help improve W3E, here are few:</p>
+            <p>There are many ways to help improve W3E.</p>
             <p><a class="w3-btn w3-theme w3-opacity-min w3-round w3-margin" href="https://github.com/emnawer/w3e/discussions" rel="nofollow" target="_blank">Join Discussion</a> <a class="w3-btn w3-theme w3-opacity-min w3-round w3-margin" href="https://github.com/emnawer/w3e/subscription" rel="nofollow" target="_blank">Subscribe to W3E</a></p>
             <p class="w3-margin" style="min-height:40px"><span class="sharethis-inline-share-buttons"></span></p>
             <div class="w3-padding-16"></div>
