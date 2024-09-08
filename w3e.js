@@ -1,5 +1,5 @@
 /*	MIT License
-	Copyright (c) 2024, Emnawer and others (https://github.com/emnawer) */
+	Copyright (c) 2024, Emnawer (https://github.com/emnawer) */
 
 const w3e = {
     updateBar: function(barID, update) {

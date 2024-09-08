@@ -380,4 +380,4 @@ This code snippet creates a simple HTML panel with the ability to be shown or hi
 
 - For [support & Feedback](https://github.com/emnawer/w3e/discussions).
 - To report [issues](https://github.com/emnawer/w3e/issues).
-- [[Buy Me Coffee](https://buymeacoffee.com/emnawer)].
+- Visit W3E website:(https://w3e.uk).

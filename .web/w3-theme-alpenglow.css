@@ -1,0 +1,26 @@
+.w3-theme-l5 {color:#000 !important; background-color:#f9f9f9 !important}
+.w3-theme-l4 {color:#000 !important; background-color:#ececec !important}
+.w3-theme-l3 {color:#000 !important; background-color:#d8d8d8 !important}
+.w3-theme-l2 {color:#000 !important; background-color:#c5c5c5 !important}
+.w3-theme-l1 {color:#000 !important; background-color:#b1b1b1 !important}
+.w3-theme-d1 {color:#fff !important; background-color:#8e8e8e !important}
+.w3-theme-d2 {color:#fff !important; background-color:#7e7e7e !important}
+.w3-theme-d3 {color:#fff !important; background-color:#6f6f6f !important}
+.w3-theme-d4 {color:#fff !important; background-color:#5f5f5f !important}
+.w3-theme-d5 {color:#fff !important; background-color:#4f4f4f !important}
+/* make w3-theme  linear-gradient(315deg, rgba(156, 39, 176, .6),rgba(244, 67, 54, .4));  */
+.w3-theme-light {color:#000 !important; background-color:#fef2f6 !important}
+.w3-theme-dark {color:#fff !important; background-color:#861966 !important}
+.w3-theme-action {color:#fff !important; background-color:#861966 !important}
+/* .w3-theme {color:#fff !important; background-color:#e91e63 !important}} */
+.w3-theme, .w3-hover-theme:hover {color:#fff !important;background-color:#e91e63 !important;background-image: linear-gradient(315deg, rgb(156, 39, 176),#e91e63);}
+.w3-button:hover {background-image: inherit;}
+h1.w3-text-theme, h2.w3-text-theme, h3.w3-text-theme, h4.w3-text-theme,h5.w3-text-theme,h6.w3-text-theme,h1.w3-hover-text-theme:hover,h2.w3-hover-text-theme:hover,h3.w3-hover-text-theme:hover,h4.w3-hover-text-theme:hover,h5.w3-hover-text-theme:hover,h6.w3-hover-text-theme:hover{color: transparent !important;background-clip: text;background-image: linear-gradient(355deg, rgb(156, 39, 176),#e91e63);background-color: transparent;}
+/* .w3-text-theme, .w3-hover-text-theme:hover {color:#e91e63 !important;} */
+/* .w3-border-theme,.w3-hover-border-theme:hover {border-color:#e91e63 !important;} */
+.w3-border-theme,.w3-hover-border-theme:hover {border-color:transparent !important; border: 1px solid transparent !important;}
+.w3-border-theme::after {z-index:-1;background-image: linear-gradient(315deg, rgb(156, 39, 176),#e91e63)}
+/* .w3-hover-theme:hover {color:#fff !important; background-color:#e91e63 !important} */
+/* .w3-hover-text-theme:hover {color:#e91e63 !important} */
+/* .w3-hover-border-theme:hover {border-color:#e91e63 !important} */
+
