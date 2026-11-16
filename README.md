@@ -41,6 +41,18 @@ The script-tag build (`w3e.js`) and the module builds share the same
 `w3e.apply(root)` to bind components added afterwards. Re-running
 `w3e.apply()` never double-binds: already wired elements are skipped.
 
+## JavaScript API
+
+`w3e` is one global object — `w3e` in the script build (also exposed as `window.w3e`), and the default export of the module builds.
+
+- `w3e.apply(root?)` — wire every component inside `root` (default: the whole document). Each component initializer runs in isolation, so malformed markup for one component cannot stop the others. Safe to call repeatedly: already wired elements are skipped.
+- `w3e.ready(callback)` — run `callback` when the DOM is ready.
+- `w3e.show(elOrId)` / `w3e.hide(elOrId)` — toggle the W3.CSS `w3-show` / `w3-hide` classes.
+- `w3e.updateBar(id, delta)` — animate a progress bar; accepts negative deltas to decrease.
+- `w3e.sideBars(root?)`, `w3e.tabs(root?)`, `w3e.accordions(root?)`, `w3e.sliders(root?)`, `w3e.dropdowns(root?)`, `w3e.panels(root?)`, `w3e.modals(root?)` — individual initializers, same contract as `apply`.
+
+The script-tag build wires components automatically on page load; the module builds do the same after import. Call `w3e.apply(root)` whenever content is added later (framework mounts, dynamic content).
+
 ## Using W3E Replaces Traditional W3.CSS
 
 Including `w3e.css` provides both the traditional W3.CSS framework and W3E enhancements. There's no need to include separate files for both.
@@ -65,7 +77,7 @@ Note that current W3E is based on W3.CSS v4.10.
 
 ## JavaScript Enhancements:
 
-The implemented JavaScript code adapts modern event handling practices as possible by utilizing a document-level event listener for click events, as opposed to the traditional method of binding functions to individual HTML elements via the `onclick=""` attribute. This approach promotes a more maintainable and scalable codebase.
+The implemented JavaScript binds each component with plain event listeners and exposes `w3e.apply(root)` so any content — static or dynamically added — can be (re-)wired at any time. Each component initializes independently: a malformed component is reported to the console without stopping the others. Compared to inline `onclick=""` attributes, this keeps behavior out of the markup and the markup free of JavaScript.
 
 **Current JavaScript Enhancements:**
 
@@ -84,7 +96,13 @@ The implemented JavaScript code adapts modern event handling practices as possib
 
 ### Live Examples
 
-**For HTML/JavaScript and ReactJS demos, visit: https://codepen.io/emnawer**
+**For HTML/JavaScript and ReactJS demos, visit: <https://codepen.io/emnawer>**
+
+| Demo | Link |
+| --- | --- |
+| ReactJS Sidebar Component (S) | <https://codepen.io/emnawer/pen/VwOrEKo> |
+
+The CodePen profile also hosts the examples used on [w3e.uk](https://w3e.uk); new pens are added there as components mature.
 
 
 
