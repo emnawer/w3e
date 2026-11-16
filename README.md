@@ -7,8 +7,39 @@ To ensure compatibility and prevent potential website or application breakage du
 
 ## CDN Hosted Files
 You can attach the following to your web application:
-* https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.css
-* https://cdn.jsdelivr.net/gh/emnawer/w3e/w3e.min.js
+* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0-rc3.1/w3e.min.css
+* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0-rc3.1/w3e.min.js
+
+Note: the links above are pinned to the latest release tag (`v1.0-rc3.1`); update the version in the link with each new release.
+
+## NPM
+
+Install the package:
+
+```
+npm install w3e
+```
+
+ES Module:
+
+```
+import w3e from "w3e";
+
+// Wire up components inside a subtree, e.g. after a framework mount or
+// when content is added dynamically:
+w3e.apply(document.getElementById("app"));
+```
+
+CommonJS:
+
+```
+const w3e = require("w3e");
+```
+
+The script-tag build (`w3e.js`) and the module builds share the same
+`w3e` object. Components are wired automatically on page load; call
+`w3e.apply(root)` to bind components added afterwards. Re-running
+`w3e.apply()` never double-binds: already wired elements are skipped.
 
 ## Using W3E Replaces Traditional W3.CSS
 

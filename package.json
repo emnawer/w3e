@@ -1,0 +1,55 @@
+{
+  "name": "w3e",
+  "version": "1.0.0-rc3.1.3",
+  "description": "W3E is an extension of the W3.CSS framework, offering additional functionalities and supplementary JavaScript w3e.js for more complete features.",
+  "main": "w3e.cjs",
+  "style": "w3e.css",
+  "unpkg": "w3e.min.js",
+  "exports": {
+    ".": {
+      "import": "./w3e.mjs",
+      "require": "./w3e.cjs",
+      "default": "./w3e.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "w3e.js",
+    "w3e.min.js",
+    "w3e.mjs",
+    "w3e.cjs",
+    "w3e.css",
+    "w3e.min.css",
+    "themes/",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "w3css",
+    "w3e",
+    "css",
+    "framework",
+    "responsive",
+    "mobile-first",
+    "front-end",
+    "web"
+  ],
+  "author": {
+    "name": "Emnawer A."
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emnawer/w3e.git"
+  },
+  "bugs": {
+    "url": "https://github.com/emnawer/w3e/issues"
+  },
+  "homepage": "https://w3e.uk",
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://buymeacoffee.com/emnawer"
+    }
+  ]
+}

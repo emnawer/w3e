@@ -1,24 +1,30 @@
 /*	MIT License
-	Copyright (c) 2024, Emnawer (https://github.com/emnawer) */
+	Copyright (c) 2026, Emnawer A. (https://github.com/emnawer) */
+const _w3eBound = new WeakSet();
 
 const w3e = {
     updateBar: function(barID, update) {
-        var bar = document.getElementById(barID);
+        const bar = document.getElementById(barID);
+        if (!bar) return;
         var width = parseInt(bar.style.width);
+        if (isNaN(width)) width = 0;
+        bar.setAttribute("role", "progressbar");
+        bar.setAttribute("aria-valuemin", "0");
+        bar.setAttribute("aria-valuemax", "100");
         var newWidth = width + update;
-        var id = setInterval((function() {
-            if (width >= newWidth) {
-                clearInterval(id);
-            } else if (width >= 100) {
-                bar.style.width = 100 + "%";
-                bar.innerHTML = 100 + "%";
-                clearInterval(id);
+        if (newWidth < 0) newWidth = 0;
+        if (newWidth > 100) newWidth = 100;
+        if (bar._w3eInterval) clearInterval(bar._w3eInterval);
+        bar._w3eInterval = setInterval(function() {
+            if (width == newWidth) {
+                clearInterval(bar._w3eInterval);
             } else {
-                width = width + 1;
+                width = width + (width < newWidth ? 1 : -1);
                 bar.style.width = width + "%";
-                bar.innerHTML = width * 1 + "%";
+                bar.textContent = width + "%";
+                bar.setAttribute("aria-valuenow", width);
             }
-        }), 10);
+        }, 10);
     },
     ready: function(callback) {
         if (document.readyState === "loading") {
@@ -28,6 +34,7 @@ const w3e = {
         }
     },
     showImg: function(images, n, slideArrayIndex, slideIndex) {
+        if (!images || !images.length) return;
         if (n > images.length) {
             slideIndex[slideArrayIndex] = 1;
         }
@@ -35,37 +42,58 @@ const w3e = {
             slideIndex[slideArrayIndex] = images.length;
         }
         for (let i = 0; i < images.length; i++) {
-            images[i].className = images[i].className.replace(" w3-show", "");
+            images[i].classList.remove("w3-show");
         }
-        images[slideIndex[slideArrayIndex] - 1].className += " w3-show";
+        images[slideIndex[slideArrayIndex] - 1].classList.add("w3-show");
     },
-    sideBars: function() {
-        const sideBars = document.getElementsByClassName("w3-sidebar");
+    sideBars: function(root) {
+        const scope = root || document;
+        const sideBars = scope.getElementsByClassName("w3-sidebar");
         for (var i = 0; i < sideBars.length; i++) {
-            sideBars[i].getElementsByClassName("w3e-close")[0].addEventListener("click", (function() {
-                this.parentElement.classList.add("w3-collapse");
-            }));
+            const closeButton = sideBars[i].getElementsByClassName("w3e-close")[0];
+            if (closeButton && !_w3eBound.has(closeButton)) {
+                _w3eBound.add(closeButton);
+                closeButton.addEventListener("click", function() {
+                    this.parentElement.classList.add("w3-collapse");
+                });
+            }
             if (sideBars[i].nextElementSibling && sideBars[i].nextElementSibling.className.indexOf("w3e-open") > -1) {
-                sideBars[i].nextElementSibling.addEventListener("click", (function() {
-                    this.previousElementSibling.classList.remove("w3-collapse");
-                }));
-            } else if (sideBars[i].nextElementSibling.getElementsByClassName("w3e-open")[0]) {
-                sideBars[i].nextElementSibling.getElementsByClassName("w3e-open")[0].addEventListener("click", (function() {
-                    this.parentElement.previousElementSibling.classList.remove("w3-collapse");
-                }));
+                if (!_w3eBound.has(sideBars[i].nextElementSibling)) {
+                    _w3eBound.add(sideBars[i].nextElementSibling);
+                    sideBars[i].nextElementSibling.addEventListener("click", function() {
+                        this.previousElementSibling.classList.remove("w3-collapse");
+                    });
+                }
+            } else if (sideBars[i].nextElementSibling && sideBars[i].nextElementSibling.getElementsByClassName("w3e-open")[0]) {
+                const openButton = sideBars[i].nextElementSibling.getElementsByClassName("w3e-open")[0];
+                if (!_w3eBound.has(openButton)) {
+                    _w3eBound.add(openButton);
+                    openButton.addEventListener("click", function() {
+                        this.parentElement.previousElementSibling.classList.remove("w3-collapse");
+                    });
+                }
             }
         }
     },
-    tabs: function() {
-        const tabs = document.getElementsByClassName("w3e-tabs");
+    tabs: function(root) {
+        const scope = root || document;
+        const tabs = scope.getElementsByClassName("w3e-tabs");
         for (let i = 0; i < tabs.length; i++) {
             const tabElements = tabs[i].children;
             let defaultButtonID = null;
+            let freshWiring = false;
             for (let j = 0; j < tabElements.length; j++) {
-                if (!tabElements[j].id.split("-tab")[0]) continue;
-                if (null == defaultButtonID) defaultButtonID = tabElements[j].id.split("-tab")[0];
+                if (!tabElements[j].id.endsWith("-tab")) continue;
                 const buttonID = tabElements[j].id.split("-tab")[0];
-                document.getElementById(buttonID).addEventListener("click", (function() {
+                const button = document.getElementById(buttonID);
+                if (!button || _w3eBound.has(button)) continue;
+                _w3eBound.add(button);
+                if (null == defaultButtonID) {
+                    defaultButtonID = buttonID;
+                    freshWiring = true;
+                }
+                button.setAttribute("aria-controls", tabElements[j].id);
+                button.addEventListener("click", function() {
                     const _this = this;
                     const lastActive = _this.parentElement.getElementsByClassName("w3-theme-dark");
                     for (let i = 0; i < lastActive.length; i++) {
@@ -73,112 +101,159 @@ const w3e = {
                     }
                     _this.classList.add("w3-theme-dark");
                     for (let i = 0; i < tabElements.length; i++) {
-                        tabElements[i].style.display = null;
+                        tabElements[i].style.display = "";
                     }
                     tabElements[j].style.display = "block";
-                }));
+                });
             }
-            document.getElementById(defaultButtonID).click();
+            if (defaultButtonID && freshWiring) document.getElementById(defaultButtonID).click();
         }
     },
-    accordions: function() {
-        document.querySelectorAll("*").forEach((function(child) {
+    accordions: function(root) {
+        (root || document).querySelectorAll('[id$="-acc"]').forEach(function(child) {
             const buttonID = child.id.split("-acc")[0];
-            if (buttonID + "-acc" == child.id && document.getElementById(buttonID)) {
-                document.getElementById(buttonID).addEventListener("click", (function() {
-                    const _this = this;
-                    if (child.className.indexOf("w3-show") == -1) {
-                        child.className += " w3-show";
-                    } else {
-                        child.className = child.className.replace(" w3-show", "");
-                    }
-                }));
-            }
-        }));
+            const button = document.getElementById(buttonID);
+            if (!button || _w3eBound.has(button)) return;
+            _w3eBound.add(button);
+            button.setAttribute("aria-controls", child.id);
+            button.setAttribute("aria-expanded", child.classList.contains("w3-show") ? "true" : "false");
+            button.addEventListener("click", function() {
+                const shown = child.classList.toggle("w3-show");
+                button.setAttribute("aria-expanded", shown ? "true" : "false");
+            });
+        });
     },
-    sliders: function() {
+    sliders: function(root) {
         const _this = this;
         var slideIndex = [];
-        var sliders = document.getElementsByClassName("w3e-slider");
+        var sliders = (root || document).getElementsByClassName("w3e-slider");
         for (let i = 0; i < sliders.length; i++) {
             if (slideIndex[i] == null) slideIndex[i] = 1;
             const slider = sliders[i];
             const images = slider.getElementsByClassName("w3e-slide");
-            const buttons = slider.getElementsByClassName("w3-button");
-            buttons[0].addEventListener("click", (function() {
-                slideIndex[i] += -1;
-                _this.showImg(images, slideIndex[i], i, slideIndex);
-            }));
-            buttons[buttons.length - 1].addEventListener("click", (function() {
-                slideIndex[i] += 1;
-                _this.showImg(images, slideIndex[i], i, slideIndex);
-            }));
+            const prevButton = slider.getElementsByClassName("w3-display-left")[0] || slider.getElementsByClassName("w3-button")[0];
+            const w3Buttons = slider.getElementsByClassName("w3-button");
+            const nextButton = slider.getElementsByClassName("w3-display-right")[0] || w3Buttons[w3Buttons.length - 1];
+            if (prevButton && !_w3eBound.has(prevButton)) {
+                _w3eBound.add(prevButton);
+                prevButton.addEventListener("click", function() {
+                    slideIndex[i] += -1;
+                    _this.showImg(images, slideIndex[i], i, slideIndex);
+                });
+            }
+            if (nextButton && nextButton !== prevButton && !_w3eBound.has(nextButton)) {
+                _w3eBound.add(nextButton);
+                nextButton.addEventListener("click", function() {
+                    slideIndex[i] += 1;
+                    _this.showImg(images, slideIndex[i], i, slideIndex);
+                });
+            }
             _this.showImg(images, 1, i, slideIndex);
         }
     },
-    modals: function() {
-        var _this = this;
-        const modal = document.getElementsByClassName("w3-modal");
+    modals: function(root) {
+        const modal = (root || document).getElementsByClassName("w3-modal");
         for (let i = 0; i < modal.length; i++) {
-            if (!modal[i].id.split("-modal")[0]) continue;
+            if (!modal[i].id.endsWith("-modal")) continue;
             const buttonID = modal[i].id.split("-modal")[0];
+            const overlay = modal[i];
             const button = document.getElementById(buttonID);
             if (!button) continue;
-            button.addEventListener("click", (function(e) {
-                modal[i].className += " w3-show";
-                modal[i].className = modal[i].className.replace("w3-hide", "");
-            }));
-            modal[i].getElementsByClassName("w3e-close")[0].addEventListener("click", (function(e) {
-                modal[i].className = modal[i].className.replace("w3-show", "");
-                modal[i].className += " w3-hide";
-            }));
+            overlay.setAttribute("role", "dialog");
+            overlay.setAttribute("aria-modal", "true");
+            if (!_w3eBound.has(button)) {
+                _w3eBound.add(button);
+                button.addEventListener("click", function(e) {
+                    overlay.classList.add("w3-show");
+                    overlay.classList.remove("w3-hide");
+                });
+            }
+            const closeButton = overlay.getElementsByClassName("w3e-close")[0];
+            if (closeButton && !_w3eBound.has(closeButton)) {
+                _w3eBound.add(closeButton);
+                const closeModal = function() {
+                    overlay.classList.remove("w3-show");
+                    overlay.classList.add("w3-hide");
+                };
+                closeButton.addEventListener("click", closeModal);
+                document.addEventListener("keydown", function(e) {
+                    if (e.key === "Escape" && overlay.classList.contains("w3-show")) {
+                        closeModal();
+                        button.focus();
+                    }
+                });
+            }
         }
     },
-    dropdowns: function() {
+    dropdowns: function(root) {
         const _this = this;
-        const dropdownClicks = document.getElementsByClassName("w3-dropdown-click");
+        const dropdownClicks = (root || document).getElementsByClassName("w3-dropdown-click");
         for (let i = 0; i < dropdownClicks.length; i++) {
             const dropdownClick = dropdownClicks[i];
+            const barBlock = dropdownClick.getElementsByClassName("w3-bar-block")[0];
+            const dropdownButton = dropdownClick.getElementsByClassName("w3-button")[0];
+            if (barBlock && dropdownButton && !_w3eBound.has(dropdownButton)) {
+                _w3eBound.add(dropdownButton);
+                dropdownButton.addEventListener("click", () => {
+                    if (barBlock.className.indexOf("w3-show") > -1) {
+                        _this.hide(barBlock);
+                    } else {
+                        _this.show(barBlock);
+                    }
+                });
+            }
             const dropdownContent = dropdownClick.getElementsByClassName("w3-dropdown-content")[0];
-            if (!dropdownContent) continue;
-            dropdownClick.getElementsByClassName("w3-button")[0].addEventListener("click", (() => {
-                if (dropdownContent.className.indexOf("w3-show") > -1) {
-                    _this.hide(dropdownContent);
-                } else {
+            if (dropdownContent && !_w3eBound.has(dropdownClick)) {
+                _w3eBound.add(dropdownClick);
+                dropdownClick.addEventListener("mouseenter", () => {
                     _this.show(dropdownContent);
-                }
-            }));
-            dropdownClick.addEventListener("mouseover", (() => {
-                _this.show(dropdownContent);
-            }));
-            dropdownClick.addEventListener("mouseout", (() => {
-                _this.hide(dropdownContent);
-            }));
+                });
+                dropdownClick.addEventListener("mouseleave", () => {
+                    _this.hide(dropdownContent);
+                });
+            }
         }
     },
-    panels: function() {
+    panels: function(root) {
         const _this = this;
-        const panels = document.getElementsByClassName("w3-panel");
+        const panels = (root || document).getElementsByClassName("w3-panel");
         for (let i = 0; i < panels.length; i++) {
             const button = panels[i].getElementsByClassName("w3-button")[0];
-            if (!button) continue;
-            button.addEventListener("click", (function(e) {
+            if (!button || _w3eBound.has(button)) continue;
+            _w3eBound.add(button);
+            button.addEventListener("click", function(e) {
                 _this.hide(panels[i]);
-            }));
+            });
         }
     },
     hide: function(obj) {
         if (typeof obj == "string") obj = document.getElementById(obj);
-        obj.className = obj.className.replace("w3-show", "");
-        if (obj.className.indexOf("-hide") == -1) obj.className += " w3-hide";
-        obj.className = obj.className.replace("  ", " ");
+        if (!obj) return;
+        obj.classList.remove("w3-show");
+        obj.classList.add("w3-hide");
     },
     show: function(obj) {
         if (typeof obj == "string") obj = document.getElementById(obj);
-        obj.className = obj.className.replace("w3-hide", "");
-        if (obj.className.indexOf("-show") == -1) obj.className += " w3-show";
-        obj.className = obj.className.replace("  ", " ");
+        if (!obj) return;
+        obj.classList.remove("w3-hide");
+        obj.classList.add("w3-show");
+    },
+    apply: function(root) {
+        const features = [ "sideBars", "tabs", "accordions", "sliders", "dropdowns", "panels", "modals" ];
+        for (let i = 0; i < features.length; i++) {
+            try {
+                w3e[features[i]](root);
+            } catch (e) {
+                console.error("w3e." + features[i] + "() skipped, check its HTML structure:", e);
+            }
+        }
+        return this;
     }
 };
 
-w3e.ready(function(){w3e.sideBars(); w3e.tabs(); w3e.accordions(); w3e.sliders();w3e.dropdowns();w3e.panels();w3e.modals();});
+if (typeof document !== "undefined") {
+    w3e.ready(function() {
+        w3e.apply();
+    });
+    window.w3e = w3e;
+}
