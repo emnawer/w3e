@@ -82,17 +82,29 @@ const w3e = {
             const tabElements = tabs[i].children;
             let defaultButtonID = null;
             let freshWiring = false;
+            const groupButtons = [];
+            const groupParents = [];
             for (let j = 0; j < tabElements.length; j++) {
                 if (!tabElements[j].id.endsWith("-tab")) continue;
                 const buttonID = tabElements[j].id.split("-tab")[0];
                 const button = document.getElementById(buttonID);
-                if (!button || _w3eBound.has(button)) continue;
+                if (!button) continue;
+                groupButtons.push(button);
+                if (groupParents.indexOf(button.parentElement) === -1) {
+                    groupParents.push(button.parentElement);
+                }
+                tabElements[j].setAttribute("role", "tabpanel");
+                tabElements[j].setAttribute("aria-labelledby", buttonID);
+                tabElements[j].setAttribute("tabindex", "0");
+                button.setAttribute("role", "tab");
+                button.setAttribute("aria-controls", tabElements[j].id);
+                if (_w3eBound.has(button)) continue;
                 _w3eBound.add(button);
                 if (null == defaultButtonID) {
                     defaultButtonID = buttonID;
                     freshWiring = true;
                 }
-                button.setAttribute("aria-controls", tabElements[j].id);
+                const buttonIndex = groupButtons.length - 1;
                 button.addEventListener("click", function() {
                     const _this = this;
                     const lastActive = _this.parentElement.getElementsByClassName("w3-theme-dark");
@@ -104,7 +116,31 @@ const w3e = {
                         tabElements[i].style.display = "";
                     }
                     tabElements[j].style.display = "block";
+                    for (let k = 0; k < groupButtons.length; k++) {
+                        const active = groupButtons[k] === _this;
+                        groupButtons[k].setAttribute("aria-selected", active ? "true" : "false");
+                        groupButtons[k].setAttribute("tabindex", active ? "0" : "-1");
+                    }
                 });
+                button.addEventListener("keydown", function(e) {
+                    let next = null;
+                    if (e.key === "ArrowRight") {
+                        next = (buttonIndex + 1) % groupButtons.length;
+                    } else if (e.key === "ArrowLeft") {
+                        next = (buttonIndex - 1 + groupButtons.length) % groupButtons.length;
+                    } else if (e.key === "Home") {
+                        next = 0;
+                    } else if (e.key === "End") {
+                        next = groupButtons.length - 1;
+                    }
+                    if (next === null) return;
+                    e.preventDefault();
+                    groupButtons[next].click();
+                    groupButtons[next].focus();
+                });
+            }
+            if (groupParents.length === 1 && !groupParents[0].hasAttribute("role")) {
+                groupParents[0].setAttribute("role", "tablist");
             }
             if (defaultButtonID && freshWiring) document.getElementById(defaultButtonID).click();
         }
@@ -194,11 +230,16 @@ const w3e = {
             const dropdownButton = dropdownClick.getElementsByClassName("w3-button")[0];
             if (barBlock && dropdownButton && !_w3eBound.has(dropdownButton)) {
                 _w3eBound.add(dropdownButton);
-                dropdownButton.addEventListener("click", () => {
+                dropdownButton.setAttribute("aria-haspopup", "true");
+                dropdownButton.setAttribute("aria-expanded", barBlock.classList.contains("w3-show") ? "true" : "false");
+                dropdownButton.addEventListener("click", function(e) {
+                    e.preventDefault();
                     if (barBlock.className.indexOf("w3-show") > -1) {
                         _this.hide(barBlock);
+                        dropdownButton.setAttribute("aria-expanded", "false");
                     } else {
                         _this.show(barBlock);
+                        dropdownButton.setAttribute("aria-expanded", "true");
                     }
                 });
             }
@@ -226,6 +267,121 @@ const w3e = {
             });
         }
     },
+    fabs: function(root) {
+        const fabs = (root || document).getElementsByClassName("w3e-fab");
+        for (let i = 0; i < fabs.length; i++) {
+            const fab = fabs[i];
+            const mainButton = fab.getElementsByClassName("w3e-fab-main")[0];
+            if (!mainButton || _w3eBound.has(mainButton)) continue;
+            _w3eBound.add(mainButton);
+            mainButton.setAttribute("aria-expanded", "false");
+            mainButton.setAttribute("aria-haspopup", "true");
+            mainButton.addEventListener("click", function() {
+                const expanded = fab.classList.toggle("w3e-expanded");
+                mainButton.setAttribute("aria-expanded", expanded ? "true" : "false");
+            });
+            const actions = fab.getElementsByClassName("w3e-fab-action");
+            for (let j = 0; j < actions.length; j++) {
+                if (_w3eBound.has(actions[j])) continue;
+                _w3eBound.add(actions[j]);
+                actions[j].addEventListener("click", function() {
+                    fab.classList.remove("w3e-expanded");
+                    mainButton.setAttribute("aria-expanded", "false");
+                });
+            }
+        }
+    },
+    sheets: function(root) {
+        const sheets = (root || document).getElementsByClassName("w3e-sheet");
+        for (let i = 0; i < sheets.length; i++) {
+            if (!sheets[i].id.endsWith("-sheet")) continue;
+            const buttonID = sheets[i].id.split("-sheet")[0];
+            const overlay = sheets[i];
+            const button = document.getElementById(buttonID);
+            if (!button) continue;
+            overlay.setAttribute("role", "dialog");
+            overlay.setAttribute("aria-modal", "true");
+            if (!_w3eBound.has(button)) {
+                _w3eBound.add(button);
+                button.addEventListener("click", function(e) {
+                    overlay.classList.add("w3-show");
+                    overlay.classList.remove("w3-hide");
+                });
+            }
+            const closeSheet = function() {
+                overlay.classList.remove("w3-show");
+                overlay.classList.add("w3-hide");
+                button.focus();
+            };
+            const closeButton = overlay.getElementsByClassName("w3e-close")[0];
+            if (closeButton && !_w3eBound.has(closeButton)) {
+                _w3eBound.add(closeButton);
+                closeButton.addEventListener("click", closeSheet);
+            }
+            if (!_w3eBound.has(overlay)) {
+                _w3eBound.add(overlay);
+                overlay.addEventListener("click", function(e) {
+                    if (e.target === overlay) closeSheet();
+                });
+                document.addEventListener("keydown", function(e) {
+                    if (e.key === "Escape" && overlay.classList.contains("w3-show")) {
+                        closeSheet();
+                    }
+                });
+            }
+        }
+    },
+    segments: function(root) {
+        const segments = (root || document).getElementsByClassName("w3e-segment");
+        for (let i = 0; i < segments.length; i++) {
+            const buttons = segments[i].getElementsByClassName("w3e-segment-btn");
+            for (let j = 0; j < buttons.length; j++) {
+                if (_w3eBound.has(buttons[j])) continue;
+                _w3eBound.add(buttons[j]);
+                buttons[j].setAttribute("aria-pressed", buttons[j].classList.contains("w3e-active") ? "true" : "false");
+                buttons[j].addEventListener("click", function() {
+                    for (let k = 0; k < buttons.length; k++) {
+                        buttons[k].classList.remove("w3e-active");
+                        buttons[k].setAttribute("aria-pressed", "false");
+                    }
+                    this.classList.add("w3e-active");
+                    this.setAttribute("aria-pressed", "true");
+                });
+            }
+        }
+    },
+    searchBars: function(root) {
+        (root || document).querySelectorAll("input.w3e-search[data-w3e-filter]").forEach(function(input) {
+            if (_w3eBound.has(input)) return;
+            _w3eBound.add(input);
+            input.addEventListener("input", function() {
+                const target = document.querySelector(input.getAttribute("data-w3e-filter"));
+                if (!target) return;
+                const needle = input.value.trim().toLowerCase();
+                const items = target.children;
+                for (let i = 0; i < items.length; i++) {
+                    items[i].style.display = items[i].textContent.toLowerCase().indexOf(needle) > -1 ? "" : "none";
+                }
+            });
+        });
+    },
+    toast: function(message, duration) {
+        if (typeof document === "undefined") return;
+        const toast = document.createElement("div");
+        toast.className = "w3e-toast";
+        toast.setAttribute("role", "status");
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        void toast.offsetWidth;
+        toast.classList.add("w3-show");
+        setTimeout(function() {
+            toast.classList.remove("w3-show");
+            setTimeout(function() {
+                if (toast.parentElement) toast.parentElement.removeChild(toast);
+            }, 400);
+        }, duration || 3e3);
+        return toast;
+    },
     hide: function(obj) {
         if (typeof obj == "string") obj = document.getElementById(obj);
         if (!obj) return;
@@ -239,7 +395,7 @@ const w3e = {
         obj.classList.add("w3-show");
     },
     apply: function(root) {
-        const features = [ "sideBars", "tabs", "accordions", "sliders", "dropdowns", "panels", "modals" ];
+        const features = [ "sideBars", "tabs", "accordions", "sliders", "dropdowns", "panels", "modals", "fabs", "sheets", "segments", "searchBars" ];
         for (let i = 0; i < features.length; i++) {
             try {
                 w3e[features[i]](root);

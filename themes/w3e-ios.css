@@ -1,0 +1,279 @@
+/*	W3E iOS Theme v1.0
+	Apple iOS look for the Material (W3.CSS/W3E) design system.
+	Load AFTER w3e.css:
+
+	  <link rel="stylesheet" href="w3e.min.css">
+	  <link rel="stylesheet" href="themes/w3e-ios.css">
+
+	What it changes
+	- Rounded geometry (10-14px) on buttons, cards, inputs, modals, toasts.
+	- Soft iOS shadows instead of Material elevation, and pressed-state
+	  opacity instead of hover shadows.
+	- Translucent, blurred top/bottom bars (backdrop-filter).
+	- Filled, bordered inputs instead of the underline style.
+	- The W3E toggle turns iOS green, the segmented control gets the iOS
+	  raised-segment look, toasts become light floating cards.
+
+	Dark mode
+	The theme ships its own dark palette in two forms:
+	  1. automatically, via prefers-color-scheme: dark, and
+	  2. manually, by adding  data-w3e-theme="dark"  to <html> (or the
+	     class w3e-dark on <body>).
+	The dark block covers surfaces the theme itself owns (toasts, action
+	sheets, modals, inputs, chips, segmented controls). Page-owned surfaces
+	(cards, bars, panels) keep their W3 color classes - give those pages
+	dark classes like w3-dark-grey as usual.
+
+	Everything here is an override layer: remove the <link> and the page
+	returns to the Material design unchanged.
+*/
+
+:root {
+    --w3e-ios-tint: #007aff;
+    --w3e-ios-green: #34c759;
+    --w3e-ios-red: #ff3b30;
+    --w3e-ios-fill: rgba(120, 120, 128, .12);
+    --w3e-ios-stroke: rgba(60, 60, 67, .18);
+    --w3e-ios-radius: 10px;
+    --w3e-ios-radius-lg: 14px;
+}
+
+/* Typography: the Apple system stack, antialiased. */
+body,
+.w3-btn,
+.w3-button,
+input,
+select,
+textarea,
+button {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Buttons: flat, rounded, pressed by opacity instead of shadow. */
+.w3-btn,
+.w3-button {
+    border-radius: var(--w3e-ios-radius);
+    box-shadow: none;
+    transition: opacity .15s;
+}
+.w3-btn:hover,
+.w3-button:hover {
+    box-shadow: none;
+    opacity: .88;
+}
+.w3-btn:active,
+.w3-button:active {
+    opacity: .55;
+    box-shadow: none;
+}
+.w3-btn.w3-disabled:hover,
+.w3-btn:disabled:hover,
+.w3-button:disabled:hover {
+    opacity: .3;
+}
+
+/* Cards: iOS-style soft shadow and rounded corners. */
+.w3-card,
+.w3-card-2,
+.w3e-card,
+.w3e-card-2 {
+    border-radius: var(--w3e-ios-radius-lg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 4px 14px rgba(0, 0, 0, .06);
+    overflow: hidden;
+}
+.w3-card-4,
+.w3e-card-6 {
+    border-radius: var(--w3e-ios-radius-lg);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .14);
+}
+
+/* Top and bottom bars: translucent, blurred, like navigation bars. */
+.w3-bar,
+.w3-top,
+.w3-bottom,
+.w3-sidebar {
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Inputs: filled fields with a hairline border. */
+.w3-input,
+.w3-select {
+    border: 1px solid var(--w3e-ios-stroke);
+    border-radius: var(--w3e-ios-radius);
+    background-color: var(--w3e-ios-fill);
+    padding: 10px 12px;
+}
+.w3-input:focus,
+.w3-select:focus {
+    border-color: var(--w3e-ios-tint);
+    outline: none;
+}
+
+/* Modals: rounded floating cards. */
+.w3-modal-content {
+    border-radius: var(--w3e-ios-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+}
+
+/* Badges and tags: pill geometry. */
+.w3-badge,
+.w3-tag {
+    border-radius: 999px;
+}
+
+/* W3E toggle: iOS green when on. */
+.w3e-toggle input:checked + .w3e-toggle-track {
+    background-color: var(--w3e-ios-green);
+}
+
+/* Segmented control: iOS raised-segment look. */
+.w3e-segment {
+    border: 0;
+    border-radius: 9px;
+    background-color: var(--w3e-ios-fill);
+    padding: 2px;
+}
+.w3e-segment .w3e-segment-btn {
+    border-radius: 7px;
+}
+.w3e-segment .w3e-segment-btn + .w3e-segment-btn {
+    border-left: 0;
+}
+.w3e-segment .w3e-active {
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+}
+
+/* Chips and search bar: iOS fill tones; the search bar regains the pill
+   shape the Material base intentionally does not have. */
+.w3e-chip {
+    background-color: var(--w3e-ios-fill);
+}
+.w3e-search {
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--w3e-ios-fill);
+}
+
+/* Action sheet: rounded panel and tinted pressed rows. */
+.w3e-sheet .w3e-sheet-panel {
+    border-radius: 16px 16px 0 0;
+}
+/* iOS grabber handle (moved here from the Material base, where M1 sheets
+   are square and handle-less). */
+.w3e-sheet .w3e-sheet-panel::before {
+    content: "";
+    display: block;
+    width: 2.5em;
+    height: .25em;
+    margin: .3em auto .6em;
+    border-radius: .125em;
+    background-color: rgba(0, 0, 0, .25);
+}
+.w3e-sheet .w3e-sheet-item:active {
+    background-color: rgba(0, 0, 0, .08);
+}
+
+/* Toast: light floating card, iOS notification style. */
+.w3e-toast {
+    background-color: rgba(250, 250, 250, .95);
+    color: #000;
+    border-radius: var(--w3e-ios-radius-lg);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+}
+
+/* Range slider: tinted thumb. */
+input.w3e-range::-webkit-slider-thumb {
+    background-color: var(--w3e-ios-tint);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+input.w3e-range::-moz-range-thumb {
+    background-color: var(--w3e-ios-tint);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25);
+}
+
+/* Spinner and skeleton: calmer, bluish-greyscale fills. */
+.w3e-spinner {
+    border-color: rgba(60, 60, 67, .12);
+    border-top-color: var(--w3e-ios-tint);
+}
+.w3e-skeleton {
+    background: linear-gradient(90deg, rgba(60, 60, 67, .08) 25%, rgba(60, 60, 67, .16) 50%, rgba(60, 60, 67, .08) 75%);
+    background-size: 200% 100%;
+}
+
+/* ---------------- Dark palette ----------------
+   Automatic via prefers-color-scheme, or manual with
+   <html data-w3e-theme="dark"> / <body class="w3e-dark">. */
+@media (prefers-color-scheme: dark) {
+    html {
+        --w3e-ios-tint: #0a84ff;
+        --w3e-ios-green: #30d158;
+        --w3e-ios-red: #ff453a;
+        --w3e-ios-fill: rgba(120, 120, 128, .24);
+        --w3e-ios-stroke: rgba(84, 84, 88, .6);
+    }
+    .w3e-toast {
+        background-color: rgba(44, 44, 46, .95);
+        color: #fff;
+    }
+    .w3e-sheet .w3e-sheet-panel {
+        background-color: #1c1c1e;
+        color: #fff;
+    }
+    .w3e-sheet .w3e-sheet-panel::before {
+        background-color: rgba(255, 255, 255, .3);
+    }
+    .w3-modal-content {
+        background-color: #1c1c1e;
+        color: #fff;
+    }
+    .w3-input,
+    .w3-select {
+        color: #fff;
+    }
+    .w3e-segment .w3e-active {
+        background-color: rgba(120, 120, 128, .36);
+        color: #fff;
+        box-shadow: none;
+    }
+}
+
+html[data-w3e-theme="dark"] {
+    --w3e-ios-tint: #0a84ff;
+    --w3e-ios-green: #30d158;
+    --w3e-ios-red: #ff453a;
+    --w3e-ios-fill: rgba(120, 120, 128, .24);
+    --w3e-ios-stroke: rgba(84, 84, 88, .6);
+}
+html[data-w3e-theme="dark"] .w3e-toast {
+    background-color: rgba(44, 44, 46, .95);
+    color: #fff;
+}
+html[data-w3e-theme="dark"] .w3e-sheet .w3e-sheet-panel {
+    background-color: #1c1c1e;
+    color: #fff;
+}
+html[data-w3e-theme="dark"] .w3e-sheet .w3e-sheet-panel::before {
+    background-color: rgba(255, 255, 255, .3);
+}
+html[data-w3e-theme="dark"] .w3-modal-content {
+    background-color: #1c1c1e;
+    color: #fff;
+}
+html[data-w3e-theme="dark"] .w3-input,
+html[data-w3e-theme="dark"] .w3-select {
+    color: #fff;
+}
+html[data-w3e-theme="dark"] .w3e-segment .w3e-active {
+    background-color: rgba(120, 120, 128, .36);
+    color: #fff;
+    box-shadow: none;
+}

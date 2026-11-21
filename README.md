@@ -7,10 +7,10 @@ To ensure compatibility and prevent potential website or application breakage du
 
 ## CDN Hosted Files
 You can attach the following to your web application:
-* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0-rc3.1/w3e.min.css
-* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0-rc3.1/w3e.min.js
+* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0.0-rc5/w3e.min.css
+* https://cdn.jsdelivr.net/gh/emnawer/w3e@v1.0.0-rc5/w3e.min.js
 
-Note: the links above are pinned to the latest release tag (`v1.0-rc3.1`); update the version in the link with each new release.
+Note: the links above are pinned to the latest release tag (`v1.0.0-rc5`); update the version in the link with each new release.
 
 ## NPM
 
@@ -49,7 +49,8 @@ The script-tag build (`w3e.js`) and the module builds share the same
 - `w3e.ready(callback)` — run `callback` when the DOM is ready.
 - `w3e.show(elOrId)` / `w3e.hide(elOrId)` — toggle the W3.CSS `w3-show` / `w3-hide` classes.
 - `w3e.updateBar(id, delta)` — animate a progress bar; accepts negative deltas to decrease.
-- `w3e.sideBars(root?)`, `w3e.tabs(root?)`, `w3e.accordions(root?)`, `w3e.sliders(root?)`, `w3e.dropdowns(root?)`, `w3e.panels(root?)`, `w3e.modals(root?)` — individual initializers, same contract as `apply`.
+- `w3e.toast(message, duration?)` — create a transient toast; returns the element. Not wired by `apply`.
+- `w3e.sideBars(root?)`, `w3e.tabs(root?)`, `w3e.accordions(root?)`, `w3e.sliders(root?)`, `w3e.dropdowns(root?)`, `w3e.panels(root?)`, `w3e.modals(root?)`, `w3e.fabs(root?)`, `w3e.sheets(root?)`, `w3e.segments(root?)`, `w3e.searchBars(root?)` — individual initializers, same contract as `apply`.
 
 The script-tag build wires components automatically on page load; the module builds do the same after import. Call `w3e.apply(root)` whenever content is added later (framework mounts, dynamic content).
 
@@ -71,8 +72,22 @@ Note that current W3E is based on W3.CSS v4.10.
 3. Adding *new* CSS class for handheld themed borders, `w3e-handheld`. Experimental maybe replaced with other 
 4. Adding *new* CSS class for the clickable tab JavaScript function. `w3e-tab`
 5. Remove (bug) `.w3-sidebar.w3-collapse{display:block!important}` from large screen media. *Removed with W3.CSS v4.10.1.* (https://github.com/emnawer/w3css)
+6. Mobile component styles (Ionic-style): `w3e-fab`, `w3e-sheet`, `w3e-toast`, `w3e-chip`, `w3e-segment`, `w3e-toggle`, `w3e-range`, `w3e-item`, `w3e-skeleton`, `w3e-spinner`, `w3e-search`.
+7. Theming: `themes/w3e-ios.css` turns the Material look into the Apple iOS design, with automatic dark mode (`prefers-color-scheme`) and a manual switch (`<html data-w3e-theme="dark">`).
 
 **For alpha CSS enhancements, [click here](https://github.com/emnawer/w3e/wiki).**
+
+## Theming (light and dark)
+
+W3E keeps the W3.CSS theming model: color classes (`w3-teal`, `w3-theme-*` files) work as before. On top of that:
+
+- **Dark mode** — components added by W3E are color-inheriting, so they follow the page's dark palette automatically. The iOS theme ships a full dark palette driven by `prefers-color-scheme: dark`, or forced with `<html data-w3e-theme="dark">`.
+- **iOS design** — load `themes/w3e-ios.css` *after* `w3e.min.css` to reskin the Material design: rounded geometry, soft shadows, blurred translucent bars, filled inputs, iOS-green toggles and raised segmented controls. Removing the `<link>` restores the Material look unchanged.
+
+```html
+<link rel="stylesheet" href="w3e.min.css">
+<link rel="stylesheet" href="themes/w3e-ios.css">
+```
 
 
 ## JavaScript Enhancements:
@@ -82,14 +97,19 @@ The implemented JavaScript binds each component with plain event listeners and e
 **Current JavaScript Enhancements:**
 
 1. Accordion.
-2. Clickable tabs.
+2. Clickable tabs, with the full ARIA tabs pattern (roles, roving tabindex, arrow-key navigation).
 3. Images slider.
 4. Sidebar.
 5. Progress bar.
 6. Modals.
-7. Dropdowns.
+7. Dropdowns, with the browser's default click response suppressed and `aria-expanded` state.
 8. Panels.
 9. Show and hide elements.
+10. Floating action button (FAB).
+11. Action sheet.
+12. Segmented control.
+13. Search bar with live list filtering.
+14. Toasts (programmatic API).
 
 **For alpha JavaScript enhancements, [click here](https://github.com/emnawer/w3e/wiki).**
 
@@ -166,6 +186,11 @@ A tabbed interface allows users to efficiently navigate between different sectio
 - For each tabbed interface found, the script iterates through its child elements.
  If a child element has both a button ID and a corresponding tab ID (ending with `-tab`), it's considered part of the tabbed interface. Otherwise, it's ignored.
 - A click event listener is attached to each button element. When clicked, the corresponding tab with the matching ID (ending with `-tab`) is displayed, and the button itself is visually highlighted using the `w3-theme-dark` class. The previously active button's highlight is removed.
+
+**Accessibility (ARIA):**
+
+- The bar containing the tab buttons receives `role="tablist"`; each button becomes `role="tab"` with `aria-selected` and a roving `tabindex` (only the active tab stays in the tab order), and each panel becomes `role="tabpanel"` labelled by its button.
+- Keyboard navigation follows the ARIA tabs pattern: with focus on a tab, ArrowLeft / ArrowRight move to the previous / next tab (wrapping around), and Home / End jump to the first / last tab. The activated tab also receives focus.
 
 **Example:**
 
@@ -352,6 +377,7 @@ Now the `w3-dropdown-click` has both behaviors of `w3-dropdown-click` and `w3-dr
 
 Clicking the Button: When the button is clicked, the JavaScript code in the HTML file `dropdowns()` function will toggle the display of the `w3-dropdown-content` element. This is achieved by adding or removing the `w3-show` class from the `w3-dropdown-content` element, which is defined in the CSS framework.
 Hovering Over the Button: The code also to use `mouseover` and `mouseout` events to toggle the display of the dropdown content. The JavaScript function adds and removes the `w3-show` class to the `w3-dropdown-content` element when the mouse enters and exits the button area.
+Default response: clicking the toggle button suppresses the browser's default action (`preventDefault`), so an `<a href="#">` toggle never jumps the page and a toggle inside a form never submits it. The button also exposes `aria-haspopup="true"` and a live `aria-expanded` state for assistive technology.
 
 **Example:**
 
@@ -423,6 +449,69 @@ This code snippet creates a simple HTML panel with the ability to be shown or hi
 </div>
 <button onclick="w3e.show('infoMessage')">Show Panel</button>
 <button onclick="w3e.hide('infoMessage')">Hide Panel</button>
+```
+
+### 10. Floating Action Button (FAB)
+
+A fixed round button that expands a stack of quick actions. The main button toggles the group; tapping any action collapses it.
+
+```
+<div class="w3e-fab">
+  <button class="w3-button w3-teal w3e-fab-main" title="Quick actions">+</button>
+  <div class="w3e-fab-actions">
+    <button class="w3-button w3-blue w3e-fab-action" title="New">+</button>
+    <button class="w3-button w3-red w3e-fab-action" title="Delete">X</button>
+  </div>
+</div>
+```
+
+### 11. Action Sheet
+
+A bottom sheet, opened by a button whose `id` matches the sheet `id` minus the `-sheet` suffix. Closes via the `w3e-close` item, the dark backdrop, or Escape.
+
+```
+<button id="share" class="w3-button w3-teal">Share</button>
+<div id="share-sheet" class="w3e-sheet w3-hide">
+  <div class="w3e-sheet-panel">
+    <div class="w3e-sheet-item w3e-close"><b>Cancel</b></div>
+    <button class="w3e-sheet-item">Copy link</button>
+    <button class="w3e-sheet-item">Save</button>
+  </div>
+</div>
+```
+
+### 12. Segmented Control
+
+The tapped `.w3e-segment-btn` gains `w3e-active`; the other buttons release it.
+
+```
+<div class="w3e-segment">
+  <button class="w3e-segment-btn w3e-active">List</button>
+  <button class="w3e-segment-btn">Grid</button>
+  <button class="w3e-segment-btn">Map</button>
+</div>
+```
+
+### 13. Search Bar with Live Filtering
+
+`data-w3e-filter` points at a container (by selector); its direct children are hidden when their text does not match the query.
+
+```
+<input class="w3e-search" data-w3e-filter="#peopleList" type="text" placeholder="Filter...">
+<div id="peopleList">
+  <div class="w3e-item">
+    <span class="w3e-item-avatar">AK</span>
+    <span class="w3e-item-body">Ada King<span class="w3e-item-note">Designer</span></span>
+  </div>
+</div>
+```
+
+### 14. Toasts
+
+Programmatic, auto-dismissing status messages.
+
+```
+<button class="w3-button w3-teal" onclick="w3e.toast('Saved successfully!', 2500)">Save</button>
 ```
 
 ## Support, Feedback & Issues
